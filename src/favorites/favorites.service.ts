@@ -22,12 +22,22 @@ class FavoritesService {
 
   async findAllByUserId(id: string, { take, skip, orderBy }: Prisma.favoritesFindManyArgs) {
     const findAllByUserId = await prismaClient.favorites.findMany({
-      where: { id: id },
+      where: { usersId: id },
       take,
       skip,
       orderBy,
     });
     return findAllByUserId;
+  }
+
+  async deleteById(id: string) {
+    console.log(id)
+    const deletefav = await prismaClient.favorites.delete({
+      where: {
+        id:id
+      }
+    });
+    return deletefav;
   }
 }
 export { FavoritesService };

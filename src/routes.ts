@@ -8,5 +8,6 @@ route.get("/users", new UserController().findAll);
 route.post("/favoritos", new FavoritesController().create);
 route.get("/favoritos", new FavoritesController().findAll);
 route.get("/favoritos/:userId", new FavoritesController().findAllByUserId);
+route.delete("/favoritos/:id", new FavoritesController().deleteById);
 
 export default route

@@ -1,14 +1,14 @@
 import { prismaClient } from "../Prisma";
 import { Prisma } from "@prisma/client";
-
+import { hash } from "bcryptjs";
 class UsersService {
-  async create({ name, email, password, telefone,subscriber }: Prisma.usersCreateInput) {
-
+  async create({ name, email, password, telefone, subscriber }: Prisma.usersCreateInput) {
+    const criptografy = await hash(password, 8);
     const create = await prismaClient.users.create({
       data: {
         name,
         email,
-        password,
+        password: criptografy,
         telefone,
         subscriber,
       },

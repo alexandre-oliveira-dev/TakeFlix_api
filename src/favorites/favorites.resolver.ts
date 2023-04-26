@@ -28,11 +28,23 @@ class FavoritesController {
   }
 
   async findAllByUserId(req: Request, res: Response) {
-    const { id } = req.params;
+    const { userId } = req.params;
     const { take, skip, orderBy }: Prisma.favoritesFindManyArgs = req.body;
 
-    const findAllByUserId = await service.findAllByUserId(id, { take, skip, orderBy });
-    return res.json(findAllByUserId)
+    const findAllByUserId = await service.findAllByUserId(userId, { take, skip, orderBy });
+    return res.json(findAllByUserId);
+  }
+
+  async deleteById(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const delet = await service.deleteById(id);
+      return res.json(delet);
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json(error);
+      
+    }
   }
 }
 
