@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import { UsersService } from "./usersService.service";
-import { Prisma } from "@prisma/client";
 
 const service = new UsersService();
 
 class UserController {
   async create(req: Request, res: Response) {
+    console.log(req.body)
     const { name, email, password, telefone, subscriber } = req.body;
+
     try {
       const createdUser = await service.create({
         name,
@@ -16,9 +17,10 @@ class UserController {
         subscriber,
       });
 
-      res.json(createdUser);
+      return res.json(createdUser);
     } catch (error) {
       res.status(500).json({ error });
+      console.log(error)
     }
   }
 

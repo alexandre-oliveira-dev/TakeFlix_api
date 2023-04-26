@@ -3,11 +3,7 @@ import { Prisma } from "@prisma/client";
 
 class UsersService {
   async create({ name, email, password, telefone,subscriber }: Prisma.usersCreateInput) {
-    const hasUser = await prismaClient.users.findFirst({ where: { email: email } });
 
-    if (hasUser) {
-      throw "user aleredy exists";
-    }
     const create = await prismaClient.users.create({
       data: {
         name,

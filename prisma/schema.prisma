@@ -11,15 +11,13 @@ datasource db {
 }
 
 model users {
-  id         String  @id @unique @default(uuid())
+  id         String      @id @unique @default(uuid())
   name       String
   email      String
   password   String
-  telefone   Int
-  subscriber Boolean @default(false)
-
-  favorites   favorites? @relation(fields: [favoritesId], references: [id])
-  favoritesId String?
+  telefone   String
+  subscriber Boolean     @default(false)
+  favorites  favorites[]
 
   @@map("users")
 }
@@ -30,7 +28,9 @@ model favorites {
   avaliation String
   imdid      String
   type       String
-  users      users[]
+
+  user users @relation(fields: [usersId], references: [id])
+  usersId    String
 
   @@map("favorites")
 }
