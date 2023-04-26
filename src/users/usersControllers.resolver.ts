@@ -4,23 +4,27 @@ import { UsersService } from "./usersService.service";
 const service = new UsersService();
 
 class UserController {
-  async create(req: Request, res: Response) {
-    const { name, email, password, telefone,subscriber } = req.body;
-    const create = await service.create({
-      name:name,
-      email:email,
-      password:password,
-      telefone:telefone,
-      subscriber
-    });
+   async create(req: Request, res: Response): Promise<void> {
+    try {
+      const { name, email, password, telefone, subscriber } = req.body;
+      const createdUser = await service.create({
+        name,
+        email,
+        password,
+        telefone,
+        subscriber,
+      });
 
-    return res.json(create);
+      res.json(createdUser);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
   }
 
   async findAll(req: Request, res: Response) {
     const findall = await service.findAll();
-    return res.json(findall)
+    return res.json(findall);
   }
 }
 
-export {UserController}
+export { UserController };

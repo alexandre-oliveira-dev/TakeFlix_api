@@ -5,4 +5,4 @@ const route = Router();
 route.post("/users", new UserController().create);
 route.get("/users", new UserController().findAll);
 
-export { route };
+export default route
