@@ -15,6 +15,7 @@ class UsersService {
         subscriber,
       },
       select: {
+        id:true,
         name: true,
         email: true,
         telefone: true,
@@ -27,6 +28,7 @@ class UsersService {
   async findAll() {
     const findall = await prismaClient.users.findMany({
       select: {
+        id:true,
         name: true,
         email: true,
         telefone: true,
@@ -42,12 +44,12 @@ class UsersService {
         email: email,
       },
     });
+    if (!hasUser) {
+      throw new Error("user not exists!");
+    }
     const passwordCompare = await compare(password, hasUser.password);
     if (!passwordCompare) {
       throw new Error("password is invalid!");
-    }
-    if (!hasUser) {
-      throw new Error("user not exists!");
     }
 
     const token = sign(
