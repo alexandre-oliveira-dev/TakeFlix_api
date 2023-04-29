@@ -27,15 +27,20 @@ class UserController {
   }
 
   async findAll(req: Request, res: Response) {
-    const findall = await service.findAll();
-    return res.json(findall);
+    const { skip, take }: Prisma.usersFindManyArgs = req.body;
+
+    const findall = await service.findAll({ skip, take });
+    return res.json({
+      ...findall,
+      total: findall.length,
+    });
   }
 
   async loginSession(req: Request, res: Response) {
     const { email, password } = req.body;
-    const createSession = await service.loginSession(email,password);
+    const createSession = await service.loginSession(email, password);
 
-    return res.json(createSession)
+    return res.json(createSession);
   }
 }
 

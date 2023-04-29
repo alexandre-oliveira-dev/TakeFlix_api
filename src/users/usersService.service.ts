@@ -15,7 +15,7 @@ class UsersService {
         subscriber,
       },
       select: {
-        id:true,
+        id: true,
         name: true,
         email: true,
         telefone: true,
@@ -25,15 +25,17 @@ class UsersService {
     return create;
   }
 
-  async findAll() {
+  async findAll({ take, skip }: Prisma.usersFindManyArgs) {
     const findall = await prismaClient.users.findMany({
       select: {
-        id:true,
+        id: true,
         name: true,
         email: true,
         telefone: true,
         subscriber: true,
       },
+      take,
+      skip,
     });
     return findall;
   }
