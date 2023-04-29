@@ -5,6 +5,16 @@ import { sign } from "jsonwebtoken";
 
 class UsersService {
   async create({ name, email, password, telefone, subscriber }: Prisma.usersCreateInput) {
+    const userEcxists = await prismaClient.users.findFirst({
+      where: {
+        email: email,
+      },
+    });
+
+    if (userEcxists) {
+      throw new Error("usuario ja existe!");
+    }
+
     const criptografy = await hash(password, 8);
     const create = await prismaClient.users.create({
       data: {
