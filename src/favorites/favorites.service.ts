@@ -3,16 +3,7 @@ import { prismaClient } from "../Prisma";
 
 class FavoritesService {
   async create({ title, imdid, avaliation, type, usersId }: Prisma.favoritesUncheckedCreateInput) {
-    const hasItem = await prismaClient.favorites.findFirst({
-      where: {
-        imdid: imdid,
-      },
-    });
-
-    if (hasItem) {
-      throw new Error("Esse filme/serie ja está salvo!");
-    }
-
+ 
     const create = await prismaClient.favorites.create({
       data: {
         title,
