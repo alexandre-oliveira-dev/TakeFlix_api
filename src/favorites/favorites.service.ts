@@ -6,9 +6,6 @@ class FavoritesService {
     const hasItem = await prismaClient.favorites.findFirst({
       where: {
         imdid: imdid,
-        OR: {
-          title: title,
-        },
       },
     });
 
