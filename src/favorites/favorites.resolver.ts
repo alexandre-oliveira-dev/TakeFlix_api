@@ -6,14 +6,21 @@ const service = new FavoritesService();
 class FavoritesController {
   async create(req: Request, res: Response) {
     try {
-      const { title, imdid, avaliation, type, usersId }: Prisma.favoritesUncheckedCreateInput =
-        req.body;
+      const {
+        title,
+        imdid,
+        avaliation,
+        type,
+        usersId,
+        poster_path,
+      }: Prisma.favoritesUncheckedCreateInput = req.body;
       const create = await service.create({
         title,
         imdid,
         avaliation,
         type,
         usersId,
+        poster_path,
       });
       return res.json(create);
     } catch (error) {
@@ -41,9 +48,8 @@ class FavoritesController {
       const delet = await service.deleteById(id);
       return res.json(delet);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return res.status(500).json(error);
-      
     }
   }
 }

@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -25,16 +22,16 @@ model users {
 }
 
 model favorites {
-  id         String    @id @unique @default(uuid())
-  title      String
-  avaliation String
-  imdid      String
-  type       String
-  created_at DateTime? @default(now())
-  updated_at DateTime? @default(now())
-
-  user    users  @relation(fields: [usersId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  usersId String
+  id          String    @id @unique @default(uuid())
+  title       String
+  avaliation  String
+  imdid       String
+  type        String
+  usersId     String
+  created_at  DateTime? @default(now())
+  updated_at  DateTime? @default(now())
+  poster_path String?   @db.VarChar
+  user        users     @relation(fields: [usersId], references: [id], onDelete: Cascade)
 
   @@map("favorites")
 }

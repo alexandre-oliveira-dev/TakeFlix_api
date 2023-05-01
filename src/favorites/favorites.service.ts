@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import { prismaClient } from "../Prisma";
 
 class FavoritesService {
-  async create({ title, imdid, avaliation, type, usersId }: Prisma.favoritesUncheckedCreateInput) {
+  async create({ title, imdid, avaliation, type, usersId,poster_path }: Prisma.favoritesUncheckedCreateInput) {
  
     const create = await prismaClient.favorites.create({
       data: {
@@ -11,6 +11,7 @@ class FavoritesService {
         avaliation,
         type,
         usersId,
+        poster_path
       },
     });
     return create;
