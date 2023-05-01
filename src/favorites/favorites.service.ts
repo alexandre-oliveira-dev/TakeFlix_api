@@ -3,6 +3,19 @@ import { prismaClient } from "../Prisma";
 
 class FavoritesService {
   async create({ title, imdid, avaliation, type, usersId }: Prisma.favoritesUncheckedCreateInput) {
+    const hasItem = await prismaClient.favorites.findFirst({
+      where: {
+        imdid: imdid,
+        OR: {
+          title: title,
+        },
+      },
+    });
+
+    if (hasItem) {
+      throw new Error("Esse filme/serie ja está salvo!");
+    }
+
     const create = await prismaClient.favorites.create({
       data: {
         title,
@@ -31,11 +44,11 @@ class FavoritesService {
   }
 
   async deleteById(id: string) {
-    console.log(id)
+    console.log(id);
     const deletefav = await prismaClient.favorites.delete({
       where: {
-        id:id
-      }
+        id: id,
+      },
     });
     return deletefav;
   }
